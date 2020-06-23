@@ -23,9 +23,6 @@
  * @license http://www.gnu.org/licenses/agpl-3.0.html GNU Affero General Public License
  */
 
-
-require_once PathManager::externalLibFile('phpmailer/class.phpmailer.php');
-
 /**
  * A wrapper class around PHPMailer to conform to the coding standards.
  */
