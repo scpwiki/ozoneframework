@@ -57,7 +57,7 @@ class PathManager{
 	}
 
 	public static function smartyDir(){
-		return 	WIKIDOT_ROOT."/vendor/smarty/smarty/libs/";
+		return 	WIKIDOT_ROOT."/vendor/scpwiki/smarty/libs/";
 	}
 
 	public static function smartyOzonePluginDir(){
@@ -65,7 +65,7 @@ class PathManager{
 	}
 
 	public static function smartyPluginDir(){
-		return 	WIKIDOT_ROOT."/vendor/smarty/smarty/libs/plugins/";
+		return 	WIKIDOT_ROOT."/vendor/scpwiki/smarty/libs/plugins/";
 	}
 
 	public static function smartyApplicationPluginDir(){
