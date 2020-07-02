@@ -23,10 +23,6 @@
  * @license http://www.gnu.org/licenses/agpl-3.0.html GNU Affero General Public License
  */
 
-
-
-use Date;
-
 /**
  * Job entry for the cron.
  *
@@ -219,8 +215,7 @@ class JobEntry {
 
 		// if "*"
 		if($string === "*"){
-			$result = null;
-			return $result;
+			return null;
 		}
 
 		//if $string is just an integer...

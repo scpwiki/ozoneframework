@@ -50,7 +50,7 @@ class ModuleService extends TemplateService {
 
 	}
 
-	public function __toString(){
+	public function __toString() : string {
 
 	}
 

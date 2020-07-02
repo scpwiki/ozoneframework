@@ -44,7 +44,6 @@ class ModuleHelpers {
 		} else {
 			$tmppath = PathManager :: moduleClassDir();
 			// generate list of possible classes:
-			$template;
 			$path44 = explode('/', $template);
 
 			for ($i = sizeof($path44) - 1; $i >= 0; $i --) {

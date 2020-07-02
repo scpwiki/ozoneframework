@@ -397,7 +397,7 @@ class RunData {
 			$sessionId = UniqueStrings :: timeBased();
 			$cookieKey = GlobalProperties::$SESSION_COOKIE_NAME;
 			$sessionSecure = GlobalProperties::$SESSION_COOKIE_SECURE;
-			$cookieResult = $this->_setCookie($cookieKey, $sessionId, time() + 10000000, "/", GlobalProperties::$SESSION_COOKIE_DOMAIN, $sessionSecure);
+			$this->_setCookie($cookieKey, $sessionId, time() + 10000000, "/", GlobalProperties::$SESSION_COOKIE_DOMAIN, $sessionSecure);
 			$session = new OzoneSession();
 
 			// set IP
@@ -426,7 +426,7 @@ class RunData {
 	public function sessionStop($removeCookie = true){
 		$s = $this->getSession();
 		if ($s) {
-			$memcache = \Ozone::$memcache;
+			$memcache = Ozone::$memcache;
 			$mkey = 'session..'.$s->getSessionId();
 			$memcache->delete($mkey);
 
@@ -491,7 +491,7 @@ class RunData {
 		}
 		//ok, cookie is here. check if corresponds to a valid session
 		// try memcached first
-		$memcache = \Ozone::$memcache;
+		$memcache = Ozone::$memcache;
 		$mkey = 'session..'.$cookieSessionId;
 
 		$session = $memcache->get($mkey);

@@ -66,13 +66,13 @@ set_include_path($paths);
 
 spl_autoload_register(function ($class) {
     if(GlobalProperties::$LOGGER_LEVEL == "debug") {
-//        trigger_error("Paths: " . get_include_path());
+        trigger_error("Paths: " . get_include_path());
     }
             $file = str_replace('\\', DIRECTORY_SEPARATOR, $class).'.php';
             if (stream_resolve_include_path($file)) {
 		    require $file;
 		    if(GlobalProperties::$LOGGER_LEVEL == "debug") {
-//                trigger_error("Loaded $file for $class");
+                trigger_error("Loaded $file for $class");
             }
                 return true;
 	    }

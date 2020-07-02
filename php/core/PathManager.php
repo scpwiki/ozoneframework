@@ -33,11 +33,11 @@
 class PathManager{
 
 	public static function ozonePhpCoreFile($fileName){
-		return OZONE_ROOT."/php/core/".$filename;
+		return OZONE_ROOT."/php/core/".$fileName;
 	}
 
 	public static function ozonePhpServiceFile($fileName){
-		return OZONE_ROOT."/php/resource/".$filename;
+		return OZONE_ROOT."/php/resource/".$fileName;
 	}
 
 	public static function ozonePhpServiceAutoloadDir(){
