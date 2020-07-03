@@ -394,7 +394,8 @@ class RunData {
 	public function sessionStart(){
 		if($this->session == null){
 			// create a new session
-			$sessionId = UniqueStrings :: timeBased();
+
+			$sessionId = UniqueStrings::random_string(60);
 			$cookieKey = GlobalProperties::$SESSION_COOKIE_NAME;
 			$sessionSecure = GlobalProperties::$SESSION_COOKIE_SECURE;
 			$this->_setCookie($cookieKey, $sessionId, time() + 10000000, "/", GlobalProperties::$SESSION_COOKIE_DOMAIN, $sessionSecure);
@@ -720,7 +721,7 @@ class RunData {
 	}
 
 	public function createUaHash() {
-		return md5($_SERVER['HTTP_USER_AGENT'] . 'hashstring');
+		return md5($_SERVER['HTTP_USER_AGENT'] . GlobalProperties::$SECRET_LOGIN_SEED);
 	}
 
 	public function setTemp($key, $value){
@@ -762,6 +763,7 @@ class RunData {
 
 	protected function _setCookies(){
 		foreach($this->_outCookies as $name => $cookie){
+		    //TODO: Use alternate assignment style to set SameSite.
 			setcookie($name, $cookie['value'], $cookie['time'], $cookie['path'], $cookie['domain']);
 		}
 	}
