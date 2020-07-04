@@ -561,7 +561,7 @@ class RunData {
 	 * Handle session at the end of the request procession.
 	 */
 	public function handleSessionEnd() {
-		if($this->session){
+	    if(!$this->session) { return; }
 			// if session storage is empty and userId = null - clear stop the session!
 			$session = $this->session;
 			$serializedData = $session->getSerializedData();
@@ -586,9 +586,9 @@ class RunData {
 				$key = 'session..'.$session->getSessionId();
 				$mc->set($key, $session, 0, 600);
 			}
-		}
-
-		$this->_setCookies();
+        if(!empty($this->_outCookies)) {
+            $this->_setCookies();
+        }
 	}
 
 	/**
@@ -763,9 +763,9 @@ class RunData {
 
 	protected function _setCookies(){
 		foreach($this->_outCookies as $name => $cookie){
-		    //TODO: Use alternate assignment style to set SameSite.
-			setcookie($name, $cookie['value'], $cookie['time'], $cookie['path'], $cookie['domain']);
+                setsecurecookie($name, $cookie['value'], $cookie['time'], $cookie['path'], $cookie['domain']);
 		}
+		return;
 	}
 
 }

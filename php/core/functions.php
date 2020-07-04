@@ -318,3 +318,27 @@ function exec_time($cmd, $time_limit = null, &$output = null, &$ret_val = null) 
 	}
 	return $out;
 }
+
+/* Enables samesite and secure functionality around existing setcookie() calls. */
+function setsecurecookie(string $key, $value, int $expires, string $path, string $domain) : void
+{
+    if(GlobalProperties::$ALLOW_ANY_HTTP == true) {
+        if (!$_SERVER['HTTPS']) {
+            setcookie($key, $value, [
+                'expires' => $expires,
+                'path' => $path,
+                'domain' => $domain,
+                'samesite' => 'None'
+            ]);
+            return;
+        }
+    }
+    setcookie($key, $value, [
+        'expires' => $expires,
+        'path' => $path,
+        'domain' => $domain,
+        'secure' => true,
+        'samesite' => 'None'
+    ]);
+    return;
+}
