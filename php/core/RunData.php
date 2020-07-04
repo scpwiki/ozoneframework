@@ -397,8 +397,7 @@ class RunData {
 
 			$sessionId = UniqueStrings::random_string(60);
 			$cookieKey = GlobalProperties::$SESSION_COOKIE_NAME;
-			$sessionSecure = GlobalProperties::$SESSION_COOKIE_SECURE;
-			$this->_setCookie($cookieKey, $sessionId, time() + 10000000, "/", GlobalProperties::$SESSION_COOKIE_DOMAIN, $sessionSecure);
+			$this->_setCookie($cookieKey, $sessionId, time() + 10000000, "/", GlobalProperties::$SESSION_COOKIE_DOMAIN);
 			$session = new OzoneSession();
 
 			// set IP
