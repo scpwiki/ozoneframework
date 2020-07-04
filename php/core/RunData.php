@@ -698,24 +698,28 @@ class RunData {
 	}
 
 	public function createIpString() {
-		if ($_SERVER["HTTP_X_FORWARDED_FOR"] && preg_match('/^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$/', $_SERVER["HTTP_X_FORWARDED_FOR"]) === 1) {
-			if ($_SERVER["HTTP_CLIENT_IP"]) {
-				$proxy = $_SERVER["HTTP_CLIENT_IP"];
-			} else {
-				$proxy = $_SERVER["REMOTE_ADDR"];
-			}
-			$ip = $_SERVER["HTTP_X_FORWARDED_FOR"];
-			$out = $ip."|".$proxy;
-		} else {
-			if ($_SERVER["HTTP_CLIENT_IP"]) {
-				$ip = $_SERVER["HTTP_CLIENT_IP"];
-			} else {
-				$ip = $_SERVER["REMOTE_ADDR"];
-			}
-			$out = $ip;
-		}
+	    # We'll revisit the need and viability of this approach when it's behind a load balancer.
 
-		return $out;
+//		if ($_SERVER["HTTP_X_FORWARDED_FOR"] && preg_match('/^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$/', $_SERVER["HTTP_X_FORWARDED_FOR"]) === 1) {
+//			if ($_SERVER["HTTP_CLIENT_IP"]) {
+//				$proxy = $_SERVER["HTTP_CLIENT_IP"];
+//			} else {
+//				$proxy = $_SERVER["REMOTE_ADDR"];
+//			}
+//			$ip = $_SERVER["HTTP_X_FORWARDED_FOR"];
+//			$out = $ip."|".$proxy;
+//		} else {
+//			if ($_SERVER["HTTP_CLIENT_IP"]) {
+//				$ip = $_SERVER["HTTP_CLIENT_IP"];
+//			} else {
+//				$ip = $_SERVER["REMOTE_ADDR"];
+//			}
+//			$out = $ip;
+//		}
+//		return $out;
+
+        # For now, there's no reason to trust the Client-IP or Forwarded-For headers, they can be arbitrarily set by the client.
+		return $_SERVER["REMOTE_ADDR"];
 
 	}
 
