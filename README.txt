@@ -1,9 +1,8 @@
-OZONE Framework for Wikidot is a modified and adapted version
-on the OZONE Web Application Framework, created originally by
-Michal Frackowiak.
+Ozone Framework for Wikijump is a modified version of the OZONE Framework for Wikidot, itself a modified version of the
+OZONE Web Application Framework, created originally by Michal Frackowiak.
 
-Original OZONE Framework has been hosted at
-http://ozoneframework.sourceforge.net
+The current version of Ozone Framework is hosted at https://github.com/scpwiki/ozoneframework.
+The original OZONE Framework has been hosted at http://ozoneframework.sourceforge.net
 
-Although there are many features not used by Wikidot please treat
-this framework as an integral part of Wikidot.
+Efforts are being made to deprecate the Ozone dependency in Wikijump, but until it is removed from Wikijump's composer
+file, please consider it integral to functionality.
