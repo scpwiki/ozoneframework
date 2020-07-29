@@ -372,10 +372,10 @@ class RunData {
 	public function sessionStart(){
 		if($this->session == null){
 			// create a new session
-			$sessionId = UniqueStrings :: timeBased();
+
+			$sessionId = UniqueStrings::random_string(60);
 			$cookieKey = GlobalProperties::$SESSION_COOKIE_NAME;
-			$sessionSecure = GlobalProperties::$SESSION_COOKIE_SECURE;
-			$cookieResult = $this->_setCookie($cookieKey, $sessionId, time() + 10000000, "/", GlobalProperties::$SESSION_COOKIE_DOMAIN, $sessionSecure);
+			$this->_setCookie($cookieKey, $sessionId, time() + 10000000, "/", GlobalProperties::$SESSION_COOKIE_DOMAIN);
 			$session = new OzoneSession();
 
 			// set IP
@@ -404,7 +404,7 @@ class RunData {
 	public function sessionStop($removeCookie = true){
 		$s = $this->getSession();
 		if ($s) {
-			$memcache = \Ozone::$memcache;
+			$memcache = Ozone::$memcache;
 			$mkey = 'session..'.$s->getSessionId();
 			$memcache->delete($mkey);
 
@@ -469,7 +469,7 @@ class RunData {
 		}
 		//ok, cookie is here. check if corresponds to a valid session
 		// try memcached first
-		$memcache = \Ozone::$memcache;
+		$memcache = Ozone::$memcache;
 		$mkey = 'session..'.$cookieSessionId;
 
 		$session = $memcache->get($mkey);
@@ -538,7 +538,7 @@ class RunData {
 	 * Handle session at the end of the request procession.
 	 */
 	public function handleSessionEnd() {
-		if($this->session){
+	    if(!$this->session) { return; }
 			// if session storage is empty and userId = null - clear stop the session!
 			$session = $this->session;
 			$serializedData = $session->getSerializedData();
@@ -563,9 +563,9 @@ class RunData {
 				$key = 'session..'.$session->getSessionId();
 				$mc->set($key, $session, 0, 600);
 			}
-		}
-
-		$this->_setCookies();
+        if(!empty($this->_outCookies)) {
+            $this->_setCookies();
+        }
 	}
 
 	/**
@@ -676,29 +676,33 @@ class RunData {
 	}
 
 	public function createIpString() {
-		if ($_SERVER["HTTP_X_FORWARDED_FOR"] && preg_match('/^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$/', $_SERVER["HTTP_X_FORWARDED_FOR"]) === 1) {
-			if ($_SERVER["HTTP_CLIENT_IP"]) {
-				$proxy = $_SERVER["HTTP_CLIENT_IP"];
-			} else {
-				$proxy = $_SERVER["REMOTE_ADDR"];
-			}
-			$ip = $_SERVER["HTTP_X_FORWARDED_FOR"];
-			$out = $ip."|".$proxy;
-		} else {
-			if ($_SERVER["HTTP_CLIENT_IP"]) {
-				$ip = $_SERVER["HTTP_CLIENT_IP"];
-			} else {
-				$ip = $_SERVER["REMOTE_ADDR"];
-			}
-			$out = $ip;
-		}
+	    # We'll revisit the need and viability of this approach when it's behind a load balancer.
 
-		return $out;
+//		if ($_SERVER["HTTP_X_FORWARDED_FOR"] && preg_match('/^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$/', $_SERVER["HTTP_X_FORWARDED_FOR"]) === 1) {
+//			if ($_SERVER["HTTP_CLIENT_IP"]) {
+//				$proxy = $_SERVER["HTTP_CLIENT_IP"];
+//			} else {
+//				$proxy = $_SERVER["REMOTE_ADDR"];
+//			}
+//			$ip = $_SERVER["HTTP_X_FORWARDED_FOR"];
+//			$out = $ip."|".$proxy;
+//		} else {
+//			if ($_SERVER["HTTP_CLIENT_IP"]) {
+//				$ip = $_SERVER["HTTP_CLIENT_IP"];
+//			} else {
+//				$ip = $_SERVER["REMOTE_ADDR"];
+//			}
+//			$out = $ip;
+//		}
+//		return $out;
+
+        # For now, there's no reason to trust the Client-IP or Forwarded-For headers, they can be arbitrarily set by the client.
+		return $_SERVER["REMOTE_ADDR"];
 
 	}
 
 	public function createUaHash() {
-		return md5($_SERVER['HTTP_USER_AGENT'] . 'hashstring');
+		return md5($_SERVER['HTTP_USER_AGENT'] . GlobalProperties::$SECRET_LOGIN_SEED);
 	}
 
 	public function setTemp($key, $value){
@@ -740,8 +744,9 @@ class RunData {
 
 	protected function _setCookies(){
 		foreach($this->_outCookies as $name => $cookie){
-			setcookie($name, $cookie['value'], $cookie['time'], $cookie['path'], $cookie['domain']);
+                setsecurecookie($name, $cookie['value'], $cookie['time'], $cookie['path'], $cookie['domain']);
 		}
+		return;
 	}
 
 }

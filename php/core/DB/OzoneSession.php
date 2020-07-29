@@ -59,7 +59,7 @@ class OzoneSession extends OzoneSessionBase {
 	 */
 	private function updateSerializedDatablock(){
 		$this->setFieldModified("serialized_datablock");
-		if(count($this->serializedData) > 0){
+		if(is_countable($this->serializedData) && count($this->serializedData) > 0){
 			$this->setSerializedDatablock(serialize($this->serializedData));
 		} else {
 			$this->setSerializedDatablock(null);

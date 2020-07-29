@@ -114,7 +114,7 @@ class Form {
 
 	public function getFieldMaxLength($name){
 		$fields = FormXMLStorage::getFormFields($this->name);
-		return $ields[$name]->rendering[0]['maxlength'];
+		return $fields[$name]->rendering[0]['maxlength'];
 	}
 
 	/**
@@ -333,7 +333,7 @@ class Form {
 		$fieldNames = FormXMLStorage::getFormFieldNames($this->name);
 		$helps = array();
 		foreach ($fieldNames as $fieldName){
-			$helps["$fieldName"] = 	$trim(''.$fields["$fieldName"]->help[0]);
+			$helps["$fieldName"] = 	trim(''.$fields["$fieldName"]->help[0]);
 		}
 		return $helps;
 	}

@@ -34,7 +34,7 @@ abstract class SmartyScreen extends Screen{
 	 	if(!file_exists($templateFile)){
 	 		// some error please!
 	 		$runData->setScreenTemplate("DefaultError");
-	 		$runData->addErrorMessage("Taka strona nie istnieje.");
+	 		$runData->addErrorMessage("Taka strona nie istnieje.");  # ???
 	 		$templateFile  = PathManager::screenTemplate($runData->getScreenTemplate());
 
 	 	} else {

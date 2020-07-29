@@ -1,41 +1,6 @@
 <?php
 
 
-
-use __construct;
-use __destruct;
-use mysql_close;
-use link;
-use getType;
-use type;
-use setServer;
-use server;
-use setPort;
-use port;
-use setUser;
-use user;
-use setPassword;
-use password;
-use setDatabase;
-use connect;
-use mysql_connect;
-use mysql_error;
-use selectDatabase;
-use instance;
-use debug;
-use mysql_select_db;
-use query;
-use is_array;
-use null;
-use mysql_query;
-use count;
-use tableExists;
-use true;
-use false;
-use columnExists;
-use nextRow;
-use array_search;
-
 /**
  * MySQL database connection resource.
  *

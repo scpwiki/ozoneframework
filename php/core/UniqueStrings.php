@@ -37,6 +37,12 @@ class UniqueStrings {
  		return $timePart."_".$number;
  	}
 
+    public static function random_string(int $length) : string
+    {
+        $bytes = random_bytes($length); // Returns a string of double the requested length.
+        return substr(bin2hex($bytes), 0, $length);
+ 	}
+
  	public static function resetCounter(){
  		UniqueStringBrokerPeer::instance()->reset();
  	}

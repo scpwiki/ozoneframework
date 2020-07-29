@@ -2,18 +2,6 @@
 
 
 
-use __construct;
-use result;
-use __destruct;
-use mysql_free_result;
-use nextRow;
-use mysql_fetch_array;
-use resetPosition;
-use asObjects;
-use setNew;
-use false;
-use getSize;
-
 /**
  * MySQL database query result.
  *
